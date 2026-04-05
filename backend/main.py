@@ -20,8 +20,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files from the frontend directory
-app.mount("/static", StaticFiles(directory="frontend"), name="static")
+# Serve static files from the root directory
+# (Note: Frontend is now at root)
+app.mount("/static", StaticFiles(directory="."), name="static")
 
 # Load the model
 def load_best_model():
@@ -58,11 +59,11 @@ CLASS_NAMES = ['Normal', 'Doubtful', 'Mild', 'Moderate', 'Severe']
 
 @app.get("/")
 async def root():
-    return FileResponse("frontend/index.html")
+    return FileResponse("index.html")
 
 @app.get("/script.js")
 async def get_script():
-    return FileResponse("frontend/script.js")
+    return FileResponse("script.js")
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
