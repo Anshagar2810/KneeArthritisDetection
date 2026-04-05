@@ -183,6 +183,12 @@ changeImageBtn.addEventListener('click', () => {
     fileInput.click();
 });
 
+// API Configuration
+// When deploying, change this to your production backend URL (e.g., Render or Railway)
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? '' 
+    : 'https://YOUR-BACKEND-URL.com'; // Replace this with your actual backend URL
+
 analyzeBtn.addEventListener('click', async () => {
     if (!selectedFile) return;
 
@@ -193,7 +199,7 @@ analyzeBtn.addEventListener('click', async () => {
     formData.append('file', selectedFile);
 
     try {
-        const response = await fetch('/predict', {
+        const response = await fetch(`${API_BASE_URL}/predict`, {
             method: 'POST',
             body: formData
         });
